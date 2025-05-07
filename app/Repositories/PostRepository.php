@@ -19,20 +19,20 @@ class PostRepository
     public function create(array $data)
     {
         $post = Post::create($data);
-        // $post->tags()->sync($data['tags'] ?? []);
+
         return $post;
     }
 
     public function update(Post $post, array $data)
     {
         $post->update($data);
-        //   $post->tags()->sync($data['tags'] ?? []);
+
         return $post;
     }
 
     public function delete(Post $post)
     {
-        // $post->tags()->detach();
+
         return $post->delete();
     }
 }

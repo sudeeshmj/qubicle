@@ -2,10 +2,12 @@
 
 namespace App\Exceptions;
 
+use App\Helpers\ApiResponseHelper;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Throwable;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Illuminate\Auth\Access\AuthorizationException;
 
 class Handler extends ExceptionHandler
 {
@@ -32,11 +34,17 @@ class Handler extends ExceptionHandler
         $this->renderable(function (NotFoundHttpException $e, $request) {
 
             if ($request->expectsJson()) {
-                return response()->json(['message' => 'Resource not found.'], 404);
+                return ApiResponseHelper::error('Resource not found.', 404);
             } else {
                 return redirect()->route('posts.index')->with('error', 'Post not found.');
             }
             return parent::render($request, $exception);
+        });
+
+        $this->renderable(function (AuthorizationException $e, $request) {
+            if ($request->expectsJson()) {
+                return ApiResponseHelper::error('Unauthorized.', 403);
+            }
         });
     }
 }
