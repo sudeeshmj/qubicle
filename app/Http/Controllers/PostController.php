@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Models\Post;
 use App\Models\Category;
-use App\Models\Tag;
 use App\Http\Requests\PostRequest;
 use App\Services\PostService;
 use Illuminate\Support\Facades\Log;
@@ -28,8 +27,8 @@ class PostController extends Controller
     public function create()
     {
         $categories = Category::all();
-        $tags = Tag::all();
-        return view('posts.create', compact('categories', 'tags'));
+
+        return view('posts.create', compact('categories'));
     }
 
     public function store(PostRequest $request)
@@ -47,8 +46,7 @@ class PostController extends Controller
     public function edit(Post $post)
     {
         $categories = Category::all();
-        $tags = Tag::all();
-        return view('posts.edit', compact('post', 'categories', 'tags'));
+        return view('posts.edit', compact('post', 'categories'));
     }
 
     public function update(PostRequest $request, Post $post)

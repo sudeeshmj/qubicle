@@ -8,12 +8,12 @@ class PostRepository
 {
     public function all()
     {
-        return Post::with(['category', 'tags', 'author'])->latest()->paginate(10);
+        return Post::with(['category', 'author'])->latest()->paginate(10);
     }
 
     public function find($id)
     {
-        return Post::with(['category', 'tags'])->findOrFail($id);
+        return Post::with(['category'])->findOrFail($id);
     }
 
     public function create(array $data)
