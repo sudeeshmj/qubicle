@@ -6,6 +6,8 @@ use App\Repositories\Api\AuthRepository;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
 use App\Helpers\ApiResponseHelper;
+use App\Mail\UserRegisteredMail;
+use Illuminate\Support\Facades\Mail;
 
 class AuthService
 {
@@ -26,6 +28,8 @@ class AuthService
                 'access_token' => $token,
                 'token_type' => 'Bearer',
             ];
+            // queue the mail
+            Mail::to($user->email)->queue(new UserRegisteredMail($user));
             return ApiResponseHelper::success('Registration successful', 201, $responseData);
         } catch (\Exception $e) {
             return ApiResponseHelper::error('Registration failed', 500);
