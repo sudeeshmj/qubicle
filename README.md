@@ -1,42 +1,186 @@
 # 📝 Laravel Blog Management System
 
-This is a simple **Blog Management System** built with **Laravel 10**, featuring API and Blade-based frontend with best practices like the **Service-Repository pattern**, **Form Requests**, **Sanctum authentication**, and **Laravel Queues** for email notifications.
+A simple blog management system built using Laravel 10. It includes both API and Blade-based frontend, using Laravel best practices like service-repository pattern, API resources, form requests, and queues.
 
 ---
 
 ## 🚀 Features
 
 ### ✅ Core Features
-- User Registration, Login, Logout (Laravel Sanctum + Breeze)
-- Blog Posts (CRUD)
-- Categories (CRUD)
-- API Filtering:
-  - Filter posts by **category**, **status**, and **title keyword**
-- API Resources for JSON formatting
-- Authenticated users can **create, update, and delete** only their posts
-- Public API access to view latest posts
+
+- User registration, login, and logout (Sanctum + Breeze)
+- Blog post CRUD (Create, Read, Update, Delete)
+- Categories CRUD
+- Filter posts by:
+  - Category
+  - Status (draft/published)
+  - Keyword in title
+- Public post listing (no auth required)
+- Only authenticated users can create/update/delete their own posts
 
 ### 🧠 Best Practices Used
-- Service Class & Repository Pattern
-- Form Request Validation
-- Laravel Queues for email (confirmation mail on registration)
-- API authentication with Laravel Sanctum
-- Blade-based and API-based implementations
-- Clean code with pagination, error handling, and status responses
-- Custom API Response Helper for unified JSON output
+
+- Service and Repository pattern
+- Form Requests for validation
+- API Resource classes for JSON formatting
+- Laravel Queues for registration confirmation email
+- Custom API Response helper
+- Sanctum token-based authentication
+- Blade views for web UI
 
 ---
 
 ## 🛠️ Tech Stack
 
 - Laravel 10
-- MySQL
 - Sanctum
-- Breeze
-- Bootstrap 5 (Blade UI)
-- Postman (for API testing)
+- Laravel Breeze (for web auth)
+- MySQL
+- Bootstrap 5
+- Laravel Queues
+- Postman (for testing)
 
 ---
 
-## 📁 Folder Structure (Key Parts)
+## 📁 Project Structure (Key)
 
+```
+app/
+├── Http/
+│   ├── Controllers/
+│   │   ├── Api/
+│   │   └── Web/
+│   ├── Requests/
+│   ├── Resources/
+├── Services/
+├── Repositories/
+├── Mail/
+├── Helpers/
+```
+
+---
+
+## ⚙️ Setup Instructions
+
+### 1. Clone the Repository
+
+```bash
+git clone https://github.com/your-username/laravel-blog-app.git
+cd laravel-blog-app
+```
+
+### 2. Install Dependencies
+
+```bash
+composer install
+npm install && npm run dev
+```
+
+### 3. Setup Environment
+
+```bash
+cp .env.example .env
+php artisan key:generate
+```
+
+### 4. Configure `.env`
+
+Update `.env` with your database and mail credentials:
+
+```
+DB_DATABASE=your_db
+DB_USERNAME=your_user
+DB_PASSWORD=your_pass
+
+MAIL_MAILER=smtp
+MAIL_HOST=smtp.mailtrap.io
+MAIL_PORT=2525
+MAIL_USERNAME=your_mailtrap_user
+MAIL_PASSWORD=your_mailtrap_pass
+MAIL_ENCRYPTION=null
+MAIL_FROM_ADDRESS=no-reply@example.com
+MAIL_FROM_NAME="Blog App"
+```
+
+### 5. Run Migrations and Seeders
+
+```bash
+php artisan migrate --seed
+```
+
+### 6. Run Application
+
+```bash
+php artisan serve
+```
+
+---
+
+## 📬 Queue for Registration Email
+
+To send confirmation email asynchronously via queue:
+
+```bash
+php artisan queue:work
+```
+
+> Make sure your mail configuration is set correctly.
+
+---
+
+## 📱 API Usage
+
+### Base URL
+
+```
+http://localhost:8000/api/v1
+```
+
+### 🔐 Auth Endpoints
+
+| Method | Endpoint      | Description         |
+|--------|---------------|---------------------|
+| POST   | `/register`   | Register a new user |
+| POST   | `/login`      | Login and receive token |
+| POST   | `/logout`     | Logout user         |
+
+### 📝 Post Endpoints
+
+| Method | Endpoint        | Auth | Description                       |
+|--------|------------------|------|-----------------------------------|
+| GET    | `/posts`         | ❌   | Public post list with filters     |
+| POST   | `/posts`         | ✅   | Create a new post                 |
+| PUT    | `/posts/{id}`    | ✅   | Update own post                   |
+| DELETE | `/posts/{id}`    | ✅   | Delete own post                   |
+
+#### 🔍 Filtering
+
+Example:
+
+```
+GET /posts?status=published&category_id=3&keyword=laravel
+```
+
+### 📂 Category Endpoints
+
+| Method | Endpoint       | Auth | Description        |
+|--------|----------------|------|--------------------|
+| GET    | `/categories`  | ❌   | List all categories|
+
+---
+
+## 📦 Postman Collection
+
+Import the Postman collection found in the `postman/` directory to test all endpoints.
+
+---
+
+## 🤝 Contribution
+
+Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
+
+---
+
+## 📄 License
+
+[MIT](LICENSE)
