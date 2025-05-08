@@ -42,7 +42,16 @@ class PostController extends Controller
                 ->with('error', 'Something went wrong. Please try again.');
         }
     }
+    public function show(string $slug)
+    {
+        $post = $this->postService->getPostBySlug($slug);
 
+        if (!$post) {
+            abort(404);
+        }
+
+        return view('posts.show', compact('post'));
+    }
     public function edit(Post $post)
     {
         $categories = Category::all();
@@ -71,5 +80,10 @@ class PostController extends Controller
 
             return redirect()->route('posts.index')->with('error', 'Delete operation failed. Please try again.');
         }
+    }
+    public function homePage()
+    {
+        $posts = $this->postService->getPublishedPosts();
+        return view('welcome', compact('posts'));
     }
 }

@@ -39,4 +39,12 @@ class PostService
     {
         return $this->postRepository->delete($post);
     }
+    public function getPublishedPosts()
+    {
+        return $this->postRepository->getPublishedPosts();
+    }
+    public function getPostBySlug(string $slug): ?Post
+    {
+        return $this->postRepository->findBySlug($slug);
+    }
 }

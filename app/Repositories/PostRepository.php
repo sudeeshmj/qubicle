@@ -35,4 +35,15 @@ class PostRepository
 
         return $post->delete();
     }
+    public function getPublishedPosts()
+    {
+        return Post::with('author')
+            ->where('status', 'published')
+            ->latest()
+            ->get();
+    }
+    public function findBySlug(string $slug): ?Post
+    {
+        return Post::where('slug', $slug)->with('author')->first();
+    }
 }
