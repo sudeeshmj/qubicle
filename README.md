@@ -1,141 +1,156 @@
-🚀 Blog Management System (Laravel)
-A simple and well-structured blog management system built with Laravel 10, supporting both Blade views and RESTful API. It includes user authentication, blog post management, categories with modern best practices like service-repository pattern and queues.
+# 📝 Laravel Blog Management System
 
-✨ Features
-🧑‍💻 Authentication
-Laravel Breeze UI-based auth (for blade views).
+A simple blog management system built using Laravel 10. It includes both API and Blade-based frontend, using Laravel best practices like service-repository pattern, API resources, form requests, and queues.
 
-Laravel Sanctum for API token authentication.
+---
 
-Register, Login, Logout (API & Web).
+## 🚀 Features
 
-📝 Blog Posts
-Full CRUD for blog posts (title, slug, body, status, category).
+### ✅ Core Features
 
-Post Filtering via API by:
+- User registration, login, and logout (Sanctum + Breeze)
+- Blog post CRUD (Create, Read, Update, Delete)
+- Categories CRUD
+- Filter posts by:
+  - Category
+  - Status (draft/published)
+  - Keyword in title
+- Public post listing (no auth required)
+- Only authenticated users can create/update/delete their own posts
 
-Category
+### 🧠 Best Practices Used
 
-Status
+- Service and Repository pattern
+- Form Requests for validation
+- API Resource classes for JSON formatting
+- Laravel Queues for registration confirmation email
+- Custom API Response helper
+- Sanctum token-based authentication
+- Blade views for web UI
 
-Keyword in title
+---
 
-Only the authenticated user can edit/delete their posts.
+## 🛠️ Tech Stack
 
-📂 Categories
-CRUD functionality for managing categories.
+- Laravel 10
+- Sanctum
+- Laravel Breeze (for web auth)
+- MySQL
+- Bootstrap 5
+- Laravel Queues
+- Postman (for testing)
 
-Each post belongs to one category.
+---
 
+## ⚙️ Setup Instructions
 
-📬 Email Notification (Queue)
-Sends a confirmation email to users upon registration via Laravel queues.
+### 1. Clone the Repository
 
-🔧 Technology & Best Practices
-Laravel 10
+```bash
+git clone https://github.com/sudeeshmj/qubicle.git
+cd qubicle
+```
 
-Laravel Breeze (UI auth)
+### 2. Install Dependencies
 
-Laravel Sanctum (API auth)
-
-Laravel Queues (Database driver)
-
-Service & Repository Pattern
-
-API Resources for consistent JSON formatting
-
-Form Request validation
-
-Bootstrap 5 + Blade for UI
-
-Clean, modular code with exception handling
-
-⚙️ Installation Instructions
-bash
-Copy
-Edit
-# Clone the repo
-git clone https://github.com/your-username/blog-management.git
-cd blog-management
-
-# Install dependencies
+```bash
 composer install
-npm install && npm run build
+npm install && npm run dev
+```
 
-# Copy environment file and configure
-cp .env.example .env
+### 3. Setup Environment
+
+```bash
+copy .env.example .env
 php artisan key:generate
+```
 
-# Set up database
-# Update .env with DB credentials
-php artisan migrate --seed
+### 4. Configure `.env`
 
-# Set up queue (Database)
-php artisan queue:table
-php artisan migrate
-php artisan queue:work
+Update `.env` with your database and mail credentials:
 
-# Start the server
-php artisan serve
-📮 Mail Configuration
-In .env:
+```
+DB_DATABASE=your_db
+DB_USERNAME=your_user
+DB_PASSWORD=your_pass
 
-env
-Copy
-Edit
 MAIL_MAILER=smtp
 MAIL_HOST=smtp.mailtrap.io
 MAIL_PORT=2525
-MAIL_USERNAME=your_username
-MAIL_PASSWORD=your_password
+MAIL_USERNAME=your_mailtrap_user
+MAIL_PASSWORD=your_mailtrap_pass
 MAIL_ENCRYPTION=null
 MAIL_FROM_ADDRESS=no-reply@example.com
 MAIL_FROM_NAME="Blog App"
-Use Mailtrap or any SMTP provider.
+```
 
-🔐 Sanctum Token Usage (API)
-Register API
-POST /api/v1/register
-Request:
+### 5. Run Migrations and Seeders
 
-json
-Copy
-Edit
-{
-  "name": "Test User",
-  "email": "test@example.com",
-  "password": "password",
-  "password_confirmation": "password"
-}
-Login API
-POST /api/v1/login
+```bash
+php artisan migrate --seed
+```
 
-json
-Copy
-Edit
-{
-  "email": "test@example.com",
-  "password": "password"
-}
-Use Token
-Add this to headers:
+### 6. Run Application
 
-css
-Copy
-Edit
-Authorization: Bearer {token}
-Logout API
-POST /api/v1/logout
+```bash
+php artisan serve
+```
 
-📘 API Endpoints Summary
-Method	Endpoint	Description
-GET	/api/v1/posts	List all posts (with filters)
-POST	/api/v1/posts	Create post (auth required)
-PUT	/api/v1/posts/{id}	Update own post (auth required)
-DELETE	/api/v1/posts/{id}	Delete own post (auth required)
-GET	/api/v1/categories	List all categories
+---
 
+## 📬 Queue for Registration Email
 
-📬 Contact
-For questions, feel free to raise an issue or contact [sudeeshmj@gmail.com].
+To send confirmation email asynchronously via queue:
 
+```bash
+php artisan queue:work
+```
+
+> Make sure your mail configuration is set correctly.
+
+---
+
+## 📱 API Usage
+
+### Base URL
+
+```
+http://localhost:8000/api/v1
+```
+
+### 🔐 Auth Endpoints
+
+| Method | Endpoint      | Description         |
+|--------|---------------|---------------------|
+| POST   | `/register`   | Register a new user |
+| POST   | `/login`      | Login and receive token |
+| POST   | `/logout`     | Logout user         |
+
+### 📝 Post Endpoints
+
+| Method | Endpoint        | Auth | Description                       |
+|--------|------------------|------|-----------------------------------|
+| GET    | `/posts`         | ❌   | Public post list with filters     |
+| POST   | `/posts`         | ✅   | Create a new post                 |
+| PUT    | `/posts/{id}`    | ✅   | Update own post                   |
+| DELETE | `/posts/{id}`    | ✅   | Delete own post                   |
+
+#### 🔍 Filtering
+
+Example:
+
+```
+GET /posts?status=published&category_id=3&keyword=laravel
+```
+
+### 📂 Category Endpoints
+
+| Method | Endpoint       | Auth | Description        |
+|--------|----------------|------|--------------------|
+| GET    | `/categories`  | ❌   | List all categories|
+
+---
+
+## 📄 License
+
+[MIT](LICENSE)
