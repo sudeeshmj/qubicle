@@ -1,66 +1,141 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+🚀 Blog Management System (Laravel)
+A simple and well-structured blog management system built with Laravel 10, supporting both Blade views and RESTful API. It includes user authentication, blog post management, categories with modern best practices like service-repository pattern and queues.
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+✨ Features
+🧑‍💻 Authentication
+Laravel Breeze UI-based auth (for blade views).
 
-## About Laravel
+Laravel Sanctum for API token authentication.
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+Register, Login, Logout (API & Web).
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+📝 Blog Posts
+Full CRUD for blog posts (title, slug, body, status, category).
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+Post Filtering via API by:
 
-## Learning Laravel
+Category
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+Status
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+Keyword in title
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+Only the authenticated user can edit/delete their posts.
 
-## Laravel Sponsors
+📂 Categories
+CRUD functionality for managing categories.
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+Each post belongs to one category.
 
-### Premium Partners
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[WebReinvent](https://webreinvent.com/)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Jump24](https://jump24.co.uk)**
-- **[Redberry](https://redberry.international/laravel/)**
-- **[Active Logic](https://activelogic.com)**
-- **[byte5](https://byte5.de)**
-- **[OP.GG](https://op.gg)**
+📬 Email Notification (Queue)
+Sends a confirmation email to users upon registration via Laravel queues.
 
-## Contributing
+🔧 Technology & Best Practices
+Laravel 10
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+Laravel Breeze (UI auth)
 
-## Code of Conduct
+Laravel Sanctum (API auth)
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+Laravel Queues (Database driver)
 
-## Security Vulnerabilities
+Service & Repository Pattern
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+API Resources for consistent JSON formatting
 
-## License
+Form Request validation
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+Bootstrap 5 + Blade for UI
+
+Clean, modular code with exception handling
+
+⚙️ Installation Instructions
+bash
+Copy
+Edit
+# Clone the repo
+git clone https://github.com/your-username/blog-management.git
+cd blog-management
+
+# Install dependencies
+composer install
+npm install && npm run build
+
+# Copy environment file and configure
+cp .env.example .env
+php artisan key:generate
+
+# Set up database
+# Update .env with DB credentials
+php artisan migrate --seed
+
+# Set up queue (Database)
+php artisan queue:table
+php artisan migrate
+php artisan queue:work
+
+# Start the server
+php artisan serve
+📮 Mail Configuration
+In .env:
+
+env
+Copy
+Edit
+MAIL_MAILER=smtp
+MAIL_HOST=smtp.mailtrap.io
+MAIL_PORT=2525
+MAIL_USERNAME=your_username
+MAIL_PASSWORD=your_password
+MAIL_ENCRYPTION=null
+MAIL_FROM_ADDRESS=no-reply@example.com
+MAIL_FROM_NAME="Blog App"
+Use Mailtrap or any SMTP provider.
+
+🔐 Sanctum Token Usage (API)
+Register API
+POST /api/v1/register
+Request:
+
+json
+Copy
+Edit
+{
+  "name": "Test User",
+  "email": "test@example.com",
+  "password": "password",
+  "password_confirmation": "password"
+}
+Login API
+POST /api/v1/login
+
+json
+Copy
+Edit
+{
+  "email": "test@example.com",
+  "password": "password"
+}
+Use Token
+Add this to headers:
+
+css
+Copy
+Edit
+Authorization: Bearer {token}
+Logout API
+POST /api/v1/logout
+
+📘 API Endpoints Summary
+Method	Endpoint	Description
+GET	/api/v1/posts	List all posts (with filters)
+POST	/api/v1/posts	Create post (auth required)
+PUT	/api/v1/posts/{id}	Update own post (auth required)
+DELETE	/api/v1/posts/{id}	Delete own post (auth required)
+GET	/api/v1/categories	List all categories
+
+
+📬 Contact
+For questions, feel free to raise an issue or contact [sudeeshmj@gmail.com].
+
