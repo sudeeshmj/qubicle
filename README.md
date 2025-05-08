@@ -10,7 +10,6 @@ This is a simple **Blog Management System** built with **Laravel 10**, featuring
 - User Registration, Login, Logout (Laravel Sanctum + Breeze)
 - Blog Posts (CRUD)
 - Categories (CRUD)
-- Tagging System (Many-to-Many - optional)
 - API Filtering:
   - Filter posts by **category**, **status**, and **title keyword**
 - API Resources for JSON formatting
