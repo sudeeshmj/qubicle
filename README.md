@@ -42,31 +42,13 @@ A simple blog management system built using Laravel 10. It includes both API and
 
 ---
 
-## 📁 Project Structure (Key)
-
-```
-app/
-├── Http/
-│   ├── Controllers/
-│   │   ├── Api/
-│   │   └── Web/
-│   ├── Requests/
-│   ├── Resources/
-├── Services/
-├── Repositories/
-├── Mail/
-├── Helpers/
-```
-
----
-
 ## ⚙️ Setup Instructions
 
 ### 1. Clone the Repository
 
 ```bash
-git clone https://github.com/your-username/laravel-blog-app.git
-cd laravel-blog-app
+git clone https://github.com/sudeeshmj/qubicle.git
+cd qubicle
 ```
 
 ### 2. Install Dependencies
@@ -79,7 +61,7 @@ npm install && npm run dev
 ### 3. Setup Environment
 
 ```bash
-cp .env.example .env
+copy .env.example .env
 php artisan key:generate
 ```
 
@@ -166,18 +148,6 @@ GET /posts?status=published&category_id=3&keyword=laravel
 | Method | Endpoint       | Auth | Description        |
 |--------|----------------|------|--------------------|
 | GET    | `/categories`  | ❌   | List all categories|
-
----
-
-## 📦 Postman Collection
-
-Import the Postman collection found in the `postman/` directory to test all endpoints.
-
----
-
-## 🤝 Contribution
-
-Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
 
 ---
 
