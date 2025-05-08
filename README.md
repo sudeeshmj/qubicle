@@ -1,5 +1,5 @@
 🚀 Blog Management System (Laravel)
-A simple and well-structured blog management system built with Laravel 10, supporting both Blade views and RESTful API. It includes user authentication, blog post management, categories with modern best practices like service-repository pattern and queues.
+A simple and well-structured blog management system built with Laravel 10, supporting both Blade views and RESTful API. It includes user authentication, blog post management, categories, and optional tagging with modern best practices like service-repository pattern and queues.
 
 ✨ Features
 🧑‍💻 Authentication
@@ -27,6 +27,8 @@ CRUD functionality for managing categories.
 
 Each post belongs to one category.
 
+🏷️ Tags (Optional/Bonus)
+Many-to-many relationship between posts and tags.
 
 📬 Email Notification (Queue)
 Sends a confirmation email to users upon registration via Laravel queues.
@@ -135,7 +137,5 @@ PUT	/api/v1/posts/{id}	Update own post (auth required)
 DELETE	/api/v1/posts/{id}	Delete own post (auth required)
 GET	/api/v1/categories	List all categories
 
-
 📬 Contact
-For questions, feel free to raise an issue or contact [sudeeshmj@gmail.com].
-
+For questions, feel free to raise an issue or contact [your-email@example.com].
